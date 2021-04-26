@@ -4,6 +4,8 @@
 #include <QPixmap>
 #include <QVector>
 
+const int dime = 200;
+
 class immagini
 {
     QVector<QPixmap> immagine;

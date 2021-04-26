@@ -85,9 +85,9 @@ Pianta **Terreno::getTerreno() const
 Terreno::Terreno()
 {
     percentualeNuovaPianta = 0.75;
-    percentualeSeccaPiante = 0.5;
-    percenualeInizioInfezione = 1;
-    numeroMinimoPropagazioneInfezione = 1;
+    percentualeSeccaPiante = 0.2;
+    percenualeInizioInfezione = 0.1;
+    numeroMinimoPropagazioneInfezione = 2;
 }
 
 Terreno::~Terreno() {
@@ -123,7 +123,7 @@ void Terreno::restart() {
 }
 
 int generaPiantaViva() {
-    return rand()%3 + 1; //assegno uno stato generico tra l valore 1 ed il valore 3, corrispondenti a stati vivi
+    return rand()%3 + 1;
 }
 
 void Terreno::generaCasualmenteInizio() {
@@ -163,15 +163,17 @@ void Terreno::cicloPiantaViva(int i, int j, int stato) {
     else if(generare(percenualeInizioInfezione) || numeroInfettiAdiacenti(i, j) >= numeroMinimoPropagazioneInfezione)
         terreno[i][j].setStato(stato + 6);
     else
-        terreno[i][j].setStato(stato++);
+        terreno[i][j].setStato(stato+1);
 }
 
 void Terreno::ciclo() {
     for_ij {
         switch(terreno[i][j].getStato()) {
             case vuoto:
-                if(generare(percentualeNuovaPianta))
-                    terreno[i][j].setStato(generaPiantaViva());
+                if(generare(percentualeNuovaPianta)) {
+                    //terreno[i][j].setStato(generaPiantaViva());
+                    terreno[i][j].setStato(germoglio);
+                }
                 break;
             case germoglioInfetto ... alberoInfetto:
                 terreno[i][j].setStato(vuoto);

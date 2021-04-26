@@ -75,7 +75,6 @@ void MainWindow::paintEvent(QPaintEvent* event) {
     QVector<QPixmap> immagini = img->getImmagine();
 
 //    QColor colore(250, 250, 250);
-    int dime = 80;
     for_ij {
         switch(terreno[i][j].getStato()) {
             case vuoto:
