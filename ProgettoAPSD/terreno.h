@@ -25,7 +25,7 @@ along with Terreno.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "pianta.h"
 
-const int dim = 5;
+const int dim = 4;
 
 #define for_i for(int i = 0; i < dim; ++i)
 #define for_j for(int j = 0; j < dim; ++j)  //implementato per prova, eliminalo

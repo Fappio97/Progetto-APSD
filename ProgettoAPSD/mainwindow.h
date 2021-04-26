@@ -45,6 +45,8 @@ private slots:
 
     void on_stop_clicked();
 
+    void on_settings_clicked();
+
 private:
     Ui::MainWindow *ui;
 

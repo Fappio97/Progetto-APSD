@@ -78,46 +78,52 @@ void MainWindow::paintEvent(QPaintEvent* event) {
     for_ij {
         switch(terreno[i][j].getStato()) {
             case vuoto:
-                paint.drawPixmap(10 + i*dime, 10+j*dime, immagini[vuoto]);
+                paint.drawPixmap(i*dime, j*dime, immagini[vuoto]);
                 break;
             case germoglio:
-                paint.drawPixmap(10 + i*dime, 10+j*dime, immagini[germoglio]);
+                paint.drawPixmap(i*dime, j*dime, immagini[germoglio]);
                 break;
             case pianta:
-                paint.drawPixmap(10 + i*dime, 10+j*dime, immagini[pianta]);
+                paint.drawPixmap(i*dime,j*dime, immagini[pianta]);
                 break;
             case albero:
-                paint.drawPixmap(10 + i*dime, 10+j*dime, immagini[albero]);
+                paint.drawPixmap(i*dime, j*dime, immagini[albero]);
                 break;
             case germoglioSecco:
-                paint.drawPixmap(10 + i*dime, 10+j*dime, immagini[germoglioSecco]);
+                paint.drawPixmap(i*dime, j*dime, immagini[germoglioSecco]);
                 break;
             case piantaSecca:
-                paint.drawPixmap(10 + i*dime, 10+j*dime, immagini[piantaSecca]);
+                paint.drawPixmap(i*dime, j*dime, immagini[piantaSecca]);
                 break;
             case alberoSecco:
-                paint.drawPixmap(10 + i*dime, 10+j*dime, immagini[alberoSecco]);
+                paint.drawPixmap(i*dime, j*dime, immagini[alberoSecco]);
                 break;
             case germoglioInfetto:
-                paint.drawPixmap(10 + i*dime, 10+j*dime, immagini[germoglioInfetto]);
+                paint.drawPixmap(i*dime, j*dime, immagini[germoglioInfetto]);
                 break;
             case piantaInfetta:
-                paint.drawPixmap(10 + i*dime, 10+j*dime, immagini[piantaInfetta]);
+                paint.drawPixmap(i*dime, j*dime, immagini[piantaInfetta]);
                 break;
             case alberoInfetto:
-                paint.drawPixmap(10 + i*dime, 10+j*dime, immagini[alberoInfetto]);
+                paint.drawPixmap(i*dime, j*dime, immagini[alberoInfetto]);
                 break;
         }
     }
-    ui->statusbar->showMessage(suolo->numeroElementiPresenti(), 1000);
+    ui->statusbar->showMessage(suolo->numeroElementiPresenti(), 2000);
 }
 
 void MainWindow::on_start_clicked()
 {
-    timer->start(1000);
+    timer->start(2000);
 }
 
 void MainWindow::on_stop_clicked()
 {
     timer->stop();
+}
+
+
+void MainWindow::on_settings_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(ui->Impostazioni);
 }

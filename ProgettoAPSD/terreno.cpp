@@ -158,10 +158,10 @@ int Terreno::numeroInfettiAdiacenti(int i, int j) const{
 }
 
 void Terreno::cicloPiantaViva(int i, int j, int stato) {
-    if(generare(percentualeSeccaPiante))
+    if(generare(percenualeInizioInfezione) || numeroInfettiAdiacenti(i, j) >= numeroMinimoPropagazioneInfezione)
+            terreno[i][j].setStato(stato + 6);
+    else if(generare(percentualeSeccaPiante))
         terreno[i][j].setStato(stato + 3);
-    else if(generare(percenualeInizioInfezione) || numeroInfettiAdiacenti(i, j) >= numeroMinimoPropagazioneInfezione)
-        terreno[i][j].setStato(stato + 6);
     else
         terreno[i][j].setStato(stato+1);
 }
@@ -170,10 +170,8 @@ void Terreno::ciclo() {
     for_ij {
         switch(terreno[i][j].getStato()) {
             case vuoto:
-                if(generare(percentualeNuovaPianta)) {
-                    //terreno[i][j].setStato(generaPiantaViva());
+                if(generare(percentualeNuovaPianta))
                     terreno[i][j].setStato(germoglio);
-                }
                 break;
             case germoglioInfetto ... alberoInfetto:
                 terreno[i][j].setStato(vuoto);
