@@ -19,7 +19,6 @@ along with Terreno.  If not, see <http://www.gnu.org/licenses/>.
 #include "ui_mainwindow.h"
 
 #include <QPainter>
-#include <QScreen>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -54,7 +53,7 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::inizializzaSuolo() {
-    suolo->setPercentualePianteIniziali(0.75);
+//    suolo->setPercentualePianteIniziali(0.75);
     suolo->start();
 }
 
@@ -109,21 +108,44 @@ void MainWindow::paintEvent(QPaintEvent* event) {
                 break;
         }
     }
+    if(suolo->getBiologico())
+        ui->biologico->setText("Terreno biologico");
+    else
+        ui->biologico->setText("Terreno NON biologico");
     ui->statusbar->showMessage(suolo->numeroElementiPresenti(), 2000);
 }
 
-void MainWindow::on_start_clicked()
+void MainWindow::on_Start_clicked()
 {
     timer->start(2000);
 }
 
-void MainWindow::on_stop_clicked()
+void MainWindow::on_Stop_clicked()
 {
     timer->stop();
 }
 
-
-void MainWindow::on_settings_clicked()
+void MainWindow::on_salvaImpostazioni_clicked()
 {
-    ui->stackedWidget->setCurrentWidget(ui->Impostazioni);
+    double nuovaPianta = ui->nuovaPianta->value();
+    suolo->setPercentualeNuovaPianta(nuovaPianta);
+
+    double piantaInfetta = ui->piantaInfetta->value();
+    suolo->setPercenualeInizioInfezione(piantaInfetta);
+
+    double pianteInizio = ui->pianteInizio->value();
+    suolo->setPercentualePianteIniziali(pianteInizio);
+
+    double pianteSecche = ui->pianteSecche->value();
+    suolo->setPercentualeSeccaPiante(pianteSecche);
+
+    int numeroMinViciniInfetti = ui->viciniInfetti->value();
+    suolo->setNumeroMinimoPropagazioneInfezione(numeroMinViciniInfetti);
+}
+
+void MainWindow::on_Guarisci_clicked()
+{
+    suolo->guarisciTutto();
+    suolo->setBiologico(false);
+    repaint();
 }

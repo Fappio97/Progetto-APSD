@@ -189,7 +189,7 @@ void Terreno::ciclo() {
 void Terreno::guarisciTutto() {
     for_ij {
         if(terreno[i][j].getStato() >= germoglioInfetto && terreno[i][j].getStato() <= alberoInfetto)
-            terreno[i][j].setStato(terreno[i][j].getStato() - 4);
+            terreno[i][j].setStato(terreno[i][j].getStato() - 6);
     }
     biologico = false;
 }

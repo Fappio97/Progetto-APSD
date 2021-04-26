@@ -41,11 +41,13 @@ public:
 private slots:
     void aggiornaInterfaccia();
 
-    void on_start_clicked();
+    void on_Start_clicked();
 
-    void on_stop_clicked();
+    void on_Stop_clicked();
 
-    void on_settings_clicked();
+    void on_salvaImpostazioni_clicked();
+
+    void on_Guarisci_clicked();
 
 private:
     Ui::MainWindow *ui;

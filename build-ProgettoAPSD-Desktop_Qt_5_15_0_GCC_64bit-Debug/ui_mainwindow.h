@@ -14,6 +14,7 @@
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
@@ -31,26 +32,27 @@ public:
     QWidget *centralwidget;
     QStackedWidget *stackedWidget;
     QWidget *Gioco;
+    QWidget *formLayoutWidget_2;
+    QFormLayout *formLayout_2;
+    QLabel *label_7;
+    QDoubleSpinBox *pianteInizio;
+    QDoubleSpinBox *pianteSecche;
+    QLabel *label_8;
+    QDoubleSpinBox *piantaInfetta;
+    QLabel *label_9;
+    QSpinBox *viciniInfetti;
+    QLabel *label_10;
+    QDoubleSpinBox *nuovaPianta;
+    QLabel *label_11;
+    QLabel *label_6;
+    QPushButton *salvaImpostazioni;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout;
     QPushButton *Start;
     QPushButton *Stop;
-    QPushButton *Settings;
+    QPushButton *Guarisci;
+    QLineEdit *biologico;
     QWidget *Impostazioni;
-    QWidget *formLayoutWidget;
-    QFormLayout *formLayout;
-    QLabel *label;
-    QDoubleSpinBox *pianteInizio;
-    QLabel *label_2;
-    QDoubleSpinBox *pianteSecche;
-    QLabel *label_3;
-    QDoubleSpinBox *piantaInfetta;
-    QLabel *label_4;
-    QSpinBox *viciniInfetti;
-    QLabel *label_5;
-    QDoubleSpinBox *nuovaPianta;
-    QLabel *label_6;
-    QPushButton *pushButton;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -58,17 +60,107 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(800, 600);
+        MainWindow->resize(1150, 820);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         stackedWidget = new QStackedWidget(centralwidget);
         stackedWidget->setObjectName(QString::fromUtf8("stackedWidget"));
-        stackedWidget->setGeometry(QRect(0, 0, 791, 545));
+        stackedWidget->setGeometry(QRect(780, 16, 361, 753));
         Gioco = new QWidget();
         Gioco->setObjectName(QString::fromUtf8("Gioco"));
+        formLayoutWidget_2 = new QWidget(Gioco);
+        formLayoutWidget_2->setObjectName(QString::fromUtf8("formLayoutWidget_2"));
+        formLayoutWidget_2->setGeometry(QRect(30, 352, 321, 185));
+        formLayout_2 = new QFormLayout(formLayoutWidget_2);
+        formLayout_2->setObjectName(QString::fromUtf8("formLayout_2"));
+        formLayout_2->setContentsMargins(0, 0, 0, 0);
+        label_7 = new QLabel(formLayoutWidget_2);
+        label_7->setObjectName(QString::fromUtf8("label_7"));
+        QFont font;
+        font.setPointSize(10);
+        label_7->setFont(font);
+
+        formLayout_2->setWidget(0, QFormLayout::LabelRole, label_7);
+
+        pianteInizio = new QDoubleSpinBox(formLayoutWidget_2);
+        pianteInizio->setObjectName(QString::fromUtf8("pianteInizio"));
+        pianteInizio->setDecimals(2);
+        pianteInizio->setMaximum(1.000000000000000);
+        pianteInizio->setSingleStep(0.010000000000000);
+        pianteInizio->setValue(0.750000000000000);
+
+        formLayout_2->setWidget(0, QFormLayout::FieldRole, pianteInizio);
+
+        pianteSecche = new QDoubleSpinBox(formLayoutWidget_2);
+        pianteSecche->setObjectName(QString::fromUtf8("pianteSecche"));
+        pianteSecche->setMaximum(1.000000000000000);
+        pianteSecche->setSingleStep(0.010000000000000);
+        pianteSecche->setValue(0.300000000000000);
+
+        formLayout_2->setWidget(1, QFormLayout::FieldRole, pianteSecche);
+
+        label_8 = new QLabel(formLayoutWidget_2);
+        label_8->setObjectName(QString::fromUtf8("label_8"));
+        label_8->setFont(font);
+
+        formLayout_2->setWidget(2, QFormLayout::LabelRole, label_8);
+
+        piantaInfetta = new QDoubleSpinBox(formLayoutWidget_2);
+        piantaInfetta->setObjectName(QString::fromUtf8("piantaInfetta"));
+        piantaInfetta->setMaximum(1.000000000000000);
+        piantaInfetta->setSingleStep(0.010000000000000);
+        piantaInfetta->setValue(0.100000000000000);
+
+        formLayout_2->setWidget(2, QFormLayout::FieldRole, piantaInfetta);
+
+        label_9 = new QLabel(formLayoutWidget_2);
+        label_9->setObjectName(QString::fromUtf8("label_9"));
+        label_9->setFont(font);
+
+        formLayout_2->setWidget(3, QFormLayout::LabelRole, label_9);
+
+        viciniInfetti = new QSpinBox(formLayoutWidget_2);
+        viciniInfetti->setObjectName(QString::fromUtf8("viciniInfetti"));
+        viciniInfetti->setMaximum(8);
+        viciniInfetti->setValue(1);
+
+        formLayout_2->setWidget(3, QFormLayout::FieldRole, viciniInfetti);
+
+        label_10 = new QLabel(formLayoutWidget_2);
+        label_10->setObjectName(QString::fromUtf8("label_10"));
+        label_10->setFont(font);
+
+        formLayout_2->setWidget(4, QFormLayout::LabelRole, label_10);
+
+        nuovaPianta = new QDoubleSpinBox(formLayoutWidget_2);
+        nuovaPianta->setObjectName(QString::fromUtf8("nuovaPianta"));
+        nuovaPianta->setMinimum(0.000000000000000);
+        nuovaPianta->setMaximum(1.000000000000000);
+        nuovaPianta->setSingleStep(0.010000000000000);
+        nuovaPianta->setValue(0.500000000000000);
+
+        formLayout_2->setWidget(4, QFormLayout::FieldRole, nuovaPianta);
+
+        label_11 = new QLabel(formLayoutWidget_2);
+        label_11->setObjectName(QString::fromUtf8("label_11"));
+        label_11->setFont(font);
+
+        formLayout_2->setWidget(1, QFormLayout::LabelRole, label_11);
+
+        label_6 = new QLabel(Gioco);
+        label_6->setObjectName(QString::fromUtf8("label_6"));
+        label_6->setGeometry(QRect(120, 304, 141, 19));
+        QFont font1;
+        font1.setPointSize(14);
+        font1.setBold(true);
+        font1.setWeight(75);
+        label_6->setFont(font1);
+        salvaImpostazioni = new QPushButton(Gioco);
+        salvaImpostazioni->setObjectName(QString::fromUtf8("salvaImpostazioni"));
+        salvaImpostazioni->setGeometry(QRect(60, 576, 261, 27));
         verticalLayoutWidget = new QWidget(Gioco);
         verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(640, 40, 131, 241));
+        verticalLayoutWidget->setGeometry(QRect(100, 112, 160, 129));
         verticalLayout = new QVBoxLayout(verticalLayoutWidget);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
@@ -82,111 +174,26 @@ public:
 
         verticalLayout->addWidget(Stop);
 
-        Settings = new QPushButton(verticalLayoutWidget);
-        Settings->setObjectName(QString::fromUtf8("Settings"));
+        Guarisci = new QPushButton(verticalLayoutWidget);
+        Guarisci->setObjectName(QString::fromUtf8("Guarisci"));
 
-        verticalLayout->addWidget(Settings);
+        verticalLayout->addWidget(Guarisci);
 
+        biologico = new QLineEdit(Gioco);
+        biologico->setObjectName(QString::fromUtf8("biologico"));
+        biologico->setGeometry(QRect(70, 40, 231, 27));
+        biologico->setAlignment(Qt::AlignCenter);
+        biologico->setReadOnly(true);
         stackedWidget->addWidget(Gioco);
         Impostazioni = new QWidget();
         Impostazioni->setObjectName(QString::fromUtf8("Impostazioni"));
         Impostazioni->setMaximumSize(QSize(791, 16777215));
         Impostazioni->setStyleSheet(QString::fromUtf8(""));
-        formLayoutWidget = new QWidget(Impostazioni);
-        formLayoutWidget->setObjectName(QString::fromUtf8("formLayoutWidget"));
-        formLayoutWidget->setGeometry(QRect(180, 160, 431, 217));
-        formLayout = new QFormLayout(formLayoutWidget);
-        formLayout->setObjectName(QString::fromUtf8("formLayout"));
-        formLayout->setContentsMargins(0, 0, 0, 0);
-        label = new QLabel(formLayoutWidget);
-        label->setObjectName(QString::fromUtf8("label"));
-        QFont font;
-        font.setPointSize(12);
-        label->setFont(font);
-
-        formLayout->setWidget(0, QFormLayout::LabelRole, label);
-
-        pianteInizio = new QDoubleSpinBox(formLayoutWidget);
-        pianteInizio->setObjectName(QString::fromUtf8("pianteInizio"));
-        pianteInizio->setDecimals(2);
-        pianteInizio->setMaximum(1.000000000000000);
-        pianteInizio->setSingleStep(0.010000000000000);
-        pianteInizio->setValue(0.750000000000000);
-
-        formLayout->setWidget(0, QFormLayout::FieldRole, pianteInizio);
-
-        label_2 = new QLabel(formLayoutWidget);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setFont(font);
-
-        formLayout->setWidget(1, QFormLayout::LabelRole, label_2);
-
-        pianteSecche = new QDoubleSpinBox(formLayoutWidget);
-        pianteSecche->setObjectName(QString::fromUtf8("pianteSecche"));
-        pianteSecche->setMaximum(1.000000000000000);
-        pianteSecche->setSingleStep(0.010000000000000);
-        pianteSecche->setValue(0.300000000000000);
-
-        formLayout->setWidget(1, QFormLayout::FieldRole, pianteSecche);
-
-        label_3 = new QLabel(formLayoutWidget);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setFont(font);
-
-        formLayout->setWidget(2, QFormLayout::LabelRole, label_3);
-
-        piantaInfetta = new QDoubleSpinBox(formLayoutWidget);
-        piantaInfetta->setObjectName(QString::fromUtf8("piantaInfetta"));
-        piantaInfetta->setMaximum(1.000000000000000);
-        piantaInfetta->setSingleStep(0.010000000000000);
-        piantaInfetta->setValue(0.100000000000000);
-
-        formLayout->setWidget(2, QFormLayout::FieldRole, piantaInfetta);
-
-        label_4 = new QLabel(formLayoutWidget);
-        label_4->setObjectName(QString::fromUtf8("label_4"));
-        label_4->setFont(font);
-
-        formLayout->setWidget(3, QFormLayout::LabelRole, label_4);
-
-        viciniInfetti = new QSpinBox(formLayoutWidget);
-        viciniInfetti->setObjectName(QString::fromUtf8("viciniInfetti"));
-        viciniInfetti->setMaximum(8);
-        viciniInfetti->setValue(1);
-
-        formLayout->setWidget(3, QFormLayout::FieldRole, viciniInfetti);
-
-        label_5 = new QLabel(formLayoutWidget);
-        label_5->setObjectName(QString::fromUtf8("label_5"));
-        label_5->setFont(font);
-
-        formLayout->setWidget(4, QFormLayout::LabelRole, label_5);
-
-        nuovaPianta = new QDoubleSpinBox(formLayoutWidget);
-        nuovaPianta->setObjectName(QString::fromUtf8("nuovaPianta"));
-        nuovaPianta->setMinimum(0.000000000000000);
-        nuovaPianta->setMaximum(1.000000000000000);
-        nuovaPianta->setSingleStep(0.010000000000000);
-        nuovaPianta->setValue(0.500000000000000);
-
-        formLayout->setWidget(4, QFormLayout::FieldRole, nuovaPianta);
-
-        label_6 = new QLabel(Impostazioni);
-        label_6->setObjectName(QString::fromUtf8("label_6"));
-        label_6->setGeometry(QRect(330, 120, 141, 19));
-        QFont font1;
-        font1.setPointSize(14);
-        font1.setBold(true);
-        font1.setWeight(75);
-        label_6->setFont(font1);
-        pushButton = new QPushButton(Impostazioni);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(270, 424, 261, 27));
         stackedWidget->addWidget(Impostazioni);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 800, 24));
+        menubar->setGeometry(QRect(0, 0, 1150, 24));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -194,23 +201,27 @@ public:
 
         retranslateUi(MainWindow);
 
+        stackedWidget->setCurrentIndex(0);
+
+
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
 
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "Terreno", nullptr));
+        label_7->setText(QCoreApplication::translate("MainWindow", "Percentuale di piante piantate all'inizio ", nullptr));
+        label_8->setText(QCoreApplication::translate("MainWindow", "Percentuale che una pianta si infetti ", nullptr));
+        label_9->setText(QCoreApplication::translate("MainWindow", "Numero minimo di vicini infetti affinch\303\251\n"
+"la pianta sana si infetti", nullptr));
+        label_10->setText(QCoreApplication::translate("MainWindow", "Percentuale di piantare un nuovo germoglio", nullptr));
+        label_11->setText(QCoreApplication::translate("MainWindow", "Percentuale che una pianta secchi", nullptr));
+        label_6->setText(QCoreApplication::translate("MainWindow", "IMPOSTAZIONI", nullptr));
+        salvaImpostazioni->setText(QCoreApplication::translate("MainWindow", "Salva Impostazioni", nullptr));
         Start->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
         Stop->setText(QCoreApplication::translate("MainWindow", "Stop", nullptr));
-        Settings->setText(QCoreApplication::translate("MainWindow", "Impostazioni", nullptr));
-        label->setText(QCoreApplication::translate("MainWindow", "Percentuale di piante piantate all'inizio ", nullptr));
-        label_2->setText(QCoreApplication::translate("MainWindow", "Percentuale che una pianta secchi", nullptr));
-        label_3->setText(QCoreApplication::translate("MainWindow", "Percentuale che una pianta si infetti ", nullptr));
-        label_4->setText(QCoreApplication::translate("MainWindow", "Numero minimo di vicini infetti affinch\303\251\n"
-"la pianta sana si infetti", nullptr));
-        label_5->setText(QCoreApplication::translate("MainWindow", "Percentuale di piantare un nuovo germoglio", nullptr));
-        label_6->setText(QCoreApplication::translate("MainWindow", "IMPOSTAZIONI", nullptr));
-        pushButton->setText(QCoreApplication::translate("MainWindow", "Gioco", nullptr));
+        Guarisci->setText(QCoreApplication::translate("MainWindow", "Guarisci Infetti", nullptr));
+        biologico->setText(QString());
     } // retranslateUi
 
 };
