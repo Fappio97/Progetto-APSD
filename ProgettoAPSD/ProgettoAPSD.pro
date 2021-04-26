@@ -10,10 +10,15 @@ CONFIG += c++11
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    pianta.cpp \
+    terreno.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    pianta.h \
+    stato.h \
+    terreno.h
 
 FORMS += \
     mainwindow.ui
