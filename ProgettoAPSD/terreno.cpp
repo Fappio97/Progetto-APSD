@@ -149,7 +149,7 @@ int Terreno::numeroInfettiAdiacenti(int i, int j) const{
     for(int x = i-1; x < i+1; ++x) {
         for(int y = j-1; y < j+1; ++y) {
             if(x >= 0 && x < dim && y >= 0 && y < dim && x != i && y != j)
-                if(terreno[x][y].getStato() >= semeInfetto || terreno[x][y].getStato() <= alberoInfetto)
+                if(terreno[x][y].getStato() >= germoglioInfetto || terreno[x][y].getStato() <= alberoInfetto)
                     somma++;
         }
     }
@@ -159,9 +159,9 @@ int Terreno::numeroInfettiAdiacenti(int i, int j) const{
 
 void Terreno::cicloPiantaViva(int i, int j, int stato) {
     if(generare(percentualeSeccaPiante))
-        terreno[i][j].setStato(secca);
+        terreno[i][j].setStato(stato + 3);
     else if(generare(percenualeInizioInfezione) || numeroInfettiAdiacenti(i, j) >= numeroMinimoPropagazioneInfezione)
-        terreno[i][j].setStato(stato + 4);
+        terreno[i][j].setStato(stato + 6);
     else
         terreno[i][j].setStato(stato++);
 }
@@ -173,13 +173,13 @@ void Terreno::ciclo() {
                 if(generare(percentualeNuovaPianta))
                     terreno[i][j].setStato(generaPiantaViva());
                 break;
-            case semeInfetto ... alberoInfetto:
+            case germoglioInfetto ... alberoInfetto:
                 terreno[i][j].setStato(vuoto);
                 break;
-            case secca:
+            case germoglioSecco ... alberoSecco:
                 terreno[i][j].setStato(vuoto);
                 break;
-            case seme ... albero:
+            case germoglio ... albero:
                 cicloPiantaViva(i, j, terreno[i][j].getStato());
                 break;
         }
@@ -188,7 +188,7 @@ void Terreno::ciclo() {
 
 void Terreno::guarisciTutto() {
     for_ij {
-        if(terreno[i][j].getStato() >= semeInfetto && terreno[i][j].getStato() <= alberoInfetto)
+        if(terreno[i][j].getStato() >= germoglioInfetto && terreno[i][j].getStato() <= alberoInfetto)
             terreno[i][j].setStato(terreno[i][j].getStato() - 4);
     }
     biologico = false;
@@ -202,13 +202,13 @@ QString Terreno::numeroElementiPresenti() const {
             case vuoto:
                 vuota ++;
                 break;
-            case semeInfetto ... alberoInfetto:
+            case germoglioInfetto ... alberoInfetto:
                 infetti ++;
                 break;
-            case secca:
+            case germoglioSecco ... alberoSecco:
                 secco ++;
                 break;
-            case seme ... albero:
+            case germoglio ... albero:
                 vivo ++;
                 break;
         }

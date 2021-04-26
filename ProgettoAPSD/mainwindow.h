@@ -22,6 +22,7 @@ along with Terreno.  If not, see <http://www.gnu.org/licenses/>.
 #include <QTimer>
 
 #include "terreno.h"
+#include "immagini.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -49,6 +50,7 @@ private:
 
     QTimer* timer;
     Terreno* suolo;
+    immagini* img;
 
     void inizializzaSuolo();
     bool primoAvvio;

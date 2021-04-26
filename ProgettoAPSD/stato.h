@@ -17,12 +17,14 @@ along with Terreno.  If not, see <http://www.gnu.org/licenses/>.
 #define STATO_H
 
 const int vuoto = 0;
-const int seme = 1;
+const int germoglio = 1;
 const int pianta = 2;
 const int albero = 3;
-const int secca = 4;
-const int semeInfetto = 5;
-const int piantaInfetta = 6;
-const int alberoInfetto = 7;
+const int germoglioSecco = 4;
+const int piantaSecca = 5;
+const int alberoSecco = 6;
+const int germoglioInfetto = 7;
+const int piantaInfetta = 8;
+const int alberoInfetto = 9;
 
 #endif // STATO_H

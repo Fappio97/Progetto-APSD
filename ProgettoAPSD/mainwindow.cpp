@@ -38,6 +38,8 @@ MainWindow::MainWindow(QWidget *parent)
     suolo = new Terreno();
     inizializzaSuolo();
     primoAvvio = true;
+    img = new immagini();
+
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(aggiornaInterfaccia()));
@@ -70,36 +72,42 @@ void MainWindow::paintEvent(QPaintEvent* event) {
     QPainter paint(this);
 
     Pianta** terreno = suolo->getTerreno();
+    QVector<QPixmap> immagini = img->getImmagine();
 
 //    QColor colore(250, 250, 250);
-    int dime = 4;
+    int dime = 80;
     for_ij {
         switch(terreno[i][j].getStato()) {
             case vuoto:
-                paint.fillRect(10 + i*dime, 10 + j*dime, dime, dime, QColor(153, 153, 102));
+                paint.drawPixmap(10 + i*dime, 10+j*dime, immagini[vuoto]);
                 break;
-            case seme:
-                paint.fillRect(10 + i*dime, 10 + j*dime, dime, dime, QColor(153, 255, 153));
+            case germoglio:
+                paint.drawPixmap(10 + i*dime, 10+j*dime, immagini[germoglio]);
                 break;
             case pianta:
-                paint.fillRect(10 + i*dime, 10 + j*dime, dime, dime, QColor(0, 204, 102));
+                paint.drawPixmap(10 + i*dime, 10+j*dime, immagini[pianta]);
                 break;
             case albero:
-                paint.fillRect(10 + i*dime, 10 + j*dime, dime, dime, QColor(0, 51, 0));
+                paint.drawPixmap(10 + i*dime, 10+j*dime, immagini[albero]);
                 break;
-            case secca:
-                paint.fillRect(10 + i*dime, 10 + j*dime, dime, dime, QColor(102, 153, 153));
+            case germoglioSecco:
+                paint.drawPixmap(10 + i*dime, 10+j*dime, immagini[germoglioSecco]);
                 break;
-            case semeInfetto:
-                paint.fillRect(10 + i*dime, 10 + j*dime, dime, dime, QColor(255, 153, 153));
+            case piantaSecca:
+                paint.drawPixmap(10 + i*dime, 10+j*dime, immagini[piantaSecca]);
+                break;
+            case alberoSecco:
+                paint.drawPixmap(10 + i*dime, 10+j*dime, immagini[alberoSecco]);
+                break;
+            case germoglioInfetto:
+                paint.drawPixmap(10 + i*dime, 10+j*dime, immagini[germoglioInfetto]);
                 break;
             case piantaInfetta:
-                paint.fillRect(10 + i*dime, 10 + j*dime, dime, dime, QColor(255, 80, 80));
+                paint.drawPixmap(10 + i*dime, 10+j*dime, immagini[piantaInfetta]);
                 break;
             case alberoInfetto:
-                paint.fillRect(10 + i*dime, 10 + j*dime, dime, dime, QColor(128, 0, 0));
+                paint.drawPixmap(10 + i*dime, 10+j*dime, immagini[alberoInfetto]);
                 break;
-
         }
     }
     ui->statusbar->showMessage(suolo->numeroElementiPresenti(), 1000);
