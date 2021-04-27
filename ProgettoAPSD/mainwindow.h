@@ -54,7 +54,7 @@ private:
 
     QTimer* timer;
     Terreno* suolo;
-    immagini* img;
+    Immagini* img;
 
     void inizializzaSuolo();
     bool primoAvvio;

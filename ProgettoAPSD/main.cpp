@@ -28,28 +28,34 @@ along with Terreno.  If not, see <http://www.gnu.org/licenses/>.
         for_j {
             switch(terreno[i][j].getStato()) {
                 case vuoto:
+                    printf("0 ");
+                    break;
+                case germoglio:
                     printf("1 ");
                     break;
-                case seme:
+                case pianta:
                     printf("2 ");
                     break;
-                case pianta:
+                case albero:
                     printf("3 ");
                     break;
-                case albero:
+                case germoglioSecco:
                     printf("4 ");
                     break;
-                case secca:
+                case piantaSecca:
                     printf("5 ");
                     break;
-                case semeInfetto:
+                case alberoSecco:
                     printf("6 ");
                     break;
-                case piantaInfetta:
+                case germoglioInfetto:
                     printf("7 ");
                     break;
-                case alberoInfetto:
+                case piantaInfetta:
                     printf("8 ");
+                    break;
+                case alberoInfetto:
+                    printf("9 ");
                     break;
 
             }
@@ -57,6 +63,7 @@ along with Terreno.  If not, see <http://www.gnu.org/licenses/>.
         printf("\n");
     }
 }*/
+
 
 int main(int argc, char *argv[])
 {
@@ -66,15 +73,34 @@ int main(int argc, char *argv[])
     return a.exec();
 
 /*    Terreno a;
-    a.setPercentualePianteIniziali(0.75);
-    a.setPercentualeNuovaPianta(0.75);
-    a.setPercentualeSeccaPiante(0.75);
-    a.setPercenualeInizioInfezione(0.75);
+    a.setPercentuali(Percentuali(0.75, 0.3, 0.1, 0.5, 1, 3));
     a.start();
 
     stampa(a);
+    printf("\n");
+
+    a.generaCasualmenteInizio();
+    stampa(a);
+    printf("\n");
 
     a.ciclo();
+    stampa(a);
+    printf("\n");
 
-    stampa(a);*/
+    a.ciclo();
+    stampa(a);
+    printf("\n");
+
+
+    a.ciclo();
+    stampa(a);
+    printf("\n");
+
+    a.ciclo();
+    stampa(a);
+    printf("\n");
+
+    a.ciclo();
+    stampa(a);
+    printf("\n");*/
 }

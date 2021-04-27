@@ -26,6 +26,9 @@ class Pianta
 
 public:
     Pianta();
+
+    void operator=(const Pianta&);
+
     int getStato() const;
     void setStato(int value);
 };

@@ -37,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent)
     suolo = new Terreno();
     inizializzaSuolo();
     primoAvvio = true;
-    img = new immagini();
+    img = new Immagini();
 
 
     timer = new QTimer(this);
@@ -48,17 +48,17 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete suolo;
-
     delete timer;
+    delete img;
 }
 
 void MainWindow::inizializzaSuolo() {
-//    suolo->setPercentualePianteIniziali(0.75);
     suolo->start();
 }
 
 void MainWindow::aggiornaInterfaccia() {
     if(primoAvvio) {
+        on_salvaImpostazioni_clicked();
         suolo->generaCasualmenteInizio();
         primoAvvio = false;
     }
@@ -71,40 +71,40 @@ void MainWindow::paintEvent(QPaintEvent* event) {
     QPainter paint(this);
 
     Pianta** terreno = suolo->getTerreno();
-    QVector<QPixmap> immagini = img->getImmagine();
+    QVector<QPixmap> immagini = img->getImmagini();
 
 //    QColor colore(250, 250, 250);
     for_ij {
         switch(terreno[i][j].getStato()) {
             case vuoto:
-                paint.drawPixmap(i*dime, j*dime, immagini[vuoto]);
+                paint.drawPixmap(i * dimensioneCelle, j * dimensioneCelle, immagini[vuoto]);
                 break;
             case germoglio:
-                paint.drawPixmap(i*dime, j*dime, immagini[germoglio]);
+                paint.drawPixmap(i * dimensioneCelle, j * dimensioneCelle, immagini[germoglio]);
                 break;
             case pianta:
-                paint.drawPixmap(i*dime,j*dime, immagini[pianta]);
+                paint.drawPixmap(i * dimensioneCelle, j * dimensioneCelle, immagini[pianta]);
                 break;
             case albero:
-                paint.drawPixmap(i*dime, j*dime, immagini[albero]);
+                paint.drawPixmap(i * dimensioneCelle, j * dimensioneCelle, immagini[albero]);
                 break;
             case germoglioSecco:
-                paint.drawPixmap(i*dime, j*dime, immagini[germoglioSecco]);
+                paint.drawPixmap(i * dimensioneCelle, j * dimensioneCelle, immagini[germoglioSecco]);
                 break;
             case piantaSecca:
-                paint.drawPixmap(i*dime, j*dime, immagini[piantaSecca]);
+                paint.drawPixmap(i * dimensioneCelle, j * dimensioneCelle, immagini[piantaSecca]);
                 break;
             case alberoSecco:
-                paint.drawPixmap(i*dime, j*dime, immagini[alberoSecco]);
+                paint.drawPixmap(i * dimensioneCelle, j * dimensioneCelle, immagini[alberoSecco]);
                 break;
             case germoglioInfetto:
-                paint.drawPixmap(i*dime, j*dime, immagini[germoglioInfetto]);
+                paint.drawPixmap(i * dimensioneCelle, j * dimensioneCelle, immagini[germoglioInfetto]);
                 break;
             case piantaInfetta:
-                paint.drawPixmap(i*dime, j*dime, immagini[piantaInfetta]);
+                paint.drawPixmap(i * dimensioneCelle, j * dimensioneCelle, immagini[piantaInfetta]);
                 break;
             case alberoInfetto:
-                paint.drawPixmap(i*dime, j*dime, immagini[alberoInfetto]);
+                paint.drawPixmap(i * dimensioneCelle, j * dimensioneCelle, immagini[alberoInfetto]);
                 break;
         }
     }
@@ -127,25 +127,18 @@ void MainWindow::on_Stop_clicked()
 
 void MainWindow::on_salvaImpostazioni_clicked()
 {
-    double nuovaPianta = ui->nuovaPianta->value();
-    suolo->setPercentualeNuovaPianta(nuovaPianta);
-
-    double piantaInfetta = ui->piantaInfetta->value();
-    suolo->setPercenualeInizioInfezione(piantaInfetta);
-
     double pianteInizio = ui->pianteInizio->value();
-    suolo->setPercentualePianteIniziali(pianteInizio);
-
     double pianteSecche = ui->pianteSecche->value();
-    suolo->setPercentualeSeccaPiante(pianteSecche);
-
+    double piantaInfetta = ui->piantaInfetta->value();
+    double nuovaPianta = ui->nuovaPianta->value();
     int numeroMinViciniInfetti = ui->viciniInfetti->value();
-    suolo->setNumeroMinimoPropagazioneInfezione(numeroMinViciniInfetti);
+    int numeroMinViniciSecchi = ui->viciniSecchi->value();
+
+    suolo->setPercentuali(Percentuali(pianteInizio, pianteSecche, piantaInfetta, nuovaPianta, numeroMinViciniInfetti, numeroMinViniciSecchi));
 }
 
 void MainWindow::on_Guarisci_clicked()
 {
     suolo->guarisciTutto();
-    suolo->setBiologico(false);
     repaint();
 }

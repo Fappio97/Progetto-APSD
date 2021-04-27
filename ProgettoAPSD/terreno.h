@@ -24,6 +24,7 @@ along with Terreno.  If not, see <http://www.gnu.org/licenses/>.
 #include <QString>
 
 #include "pianta.h"
+#include "percentuali.h"
 
 const int dim = 4;
 
@@ -34,44 +35,31 @@ const int dim = 4;
 class Terreno
 {
     Pianta** terreno;
-    double percentualePianteIniziali;
-    double percentualeSeccaPiante;
-    double percenualeInizioInfezione;
-    int numeroMinimoPropagazioneInfezione;
-    double percentualeNuovaPianta;
+    Pianta** copiaTerreno;
+    Percentuali percentuali;
     bool biologico;
 
 public:
     Terreno();
+    Terreno(const Terreno&);
     ~Terreno();
     void svuota();
+    void operator=(const Terreno&);
+
+    void allocaMatricePianta(); //alloca la matrice di pianta
+    void copiaMatrice();    //copia il terreno2, dopo il ciclo, nel terreno1
 
     void start(); //primo avvio
-    void restart(); //risemina il terreno
     void generaCasualmenteInizio();   //genera casualmente lo stato delle piante all'inzio
-    void cicloPiantaViva(int, int, int); //funzione che tratta le piante, vede se si diffonde il parassita, se seccano oppure crescono
+    void cicloPiantaViva(int, int, int, double, double); //funzione che tratta le piante, vede se si diffonde il parassita, se seccano oppure crescono
     void ciclo();   //ciclo dell'evoluzione
     void guarisciTutto();   //guarisce tutte le piante infette
-    int numeroInfettiAdiacenti(int, int) const;   //se una pianta è infetta, vi è una probabilità diversa dall'inizio di propagazione del virus, che si espande alle piante adiacenti, limiti dei bordi, come un terreno
-    QString numeroElementiPresenti() const;
+    int numeroAdiacenti(int, int, int, int) const;   //restituisce il numero di piante che presentano lo stato tra il range(statoIniziale, statoFinale), adiacenti alla zolla di terra di coordinate i,j. Mi serve per calcolare il numero di infetti e secchi adiacenti con un'unica funzione
+    QString numeroElementiPresenti() const; //stampe per lo statusbar
 
-    double getPercentualeNuovaPianta() const;
-    void setPercentualeNuovaPianta(double value);
-    double getPercenualeDiffusioneParassita() const;
-    void setPercenualeDiffusioneParassita(double value);
-    double getPercentualeSeccaPiante() const;
-    void setPercentualeSeccaPiante(double value);
-    double getPercentualePianteIniziali() const;
-    void setPercentualePianteIniziali(double value);
-    double getPercenualeInizioInfezione() const;
-    void setPercenualeInizioInfezione(double value);
-    int getNumeroMinimoPropagazioneInfezione() const;
-    void setNumeroMinimoPropagazioneInfezione(int value);
     bool getBiologico() const;
-    void setBiologico(bool value);
     Pianta **getTerreno() const;
-
-
+    void setPercentuali(const Percentuali &value);
 };
 
 #endif // TERRENO_H

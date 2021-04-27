@@ -18,6 +18,7 @@ SOURCES += \
 HEADERS += \
     immagini.h \
     mainwindow.h \
+    percentuali.h \
     pianta.h \
     stato.h \
     terreno.h

@@ -44,6 +44,8 @@ public:
     QLabel *label_10;
     QDoubleSpinBox *nuovaPianta;
     QLabel *label_11;
+    QLabel *label;
+    QSpinBox *viciniSecchi;
     QLabel *label_6;
     QPushButton *salvaImpostazioni;
     QWidget *verticalLayoutWidget;
@@ -61,16 +63,18 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(1150, 820);
+        MainWindow->setMinimumSize(QSize(1150, 820));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         stackedWidget = new QStackedWidget(centralwidget);
         stackedWidget->setObjectName(QString::fromUtf8("stackedWidget"));
-        stackedWidget->setGeometry(QRect(780, 16, 361, 753));
+        stackedWidget->setGeometry(QRect(780, 16, 1160, 820));
+        stackedWidget->setMinimumSize(QSize(1160, 820));
         Gioco = new QWidget();
         Gioco->setObjectName(QString::fromUtf8("Gioco"));
         formLayoutWidget_2 = new QWidget(Gioco);
         formLayoutWidget_2->setObjectName(QString::fromUtf8("formLayoutWidget_2"));
-        formLayoutWidget_2->setGeometry(QRect(30, 352, 321, 185));
+        formLayoutWidget_2->setGeometry(QRect(30, 352, 339, 213));
         formLayout_2 = new QFormLayout(formLayoutWidget_2);
         formLayout_2->setObjectName(QString::fromUtf8("formLayout_2"));
         formLayout_2->setContentsMargins(0, 0, 0, 0);
@@ -147,6 +151,19 @@ public:
 
         formLayout_2->setWidget(1, QFormLayout::LabelRole, label_11);
 
+        label = new QLabel(formLayoutWidget_2);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setFont(font);
+
+        formLayout_2->setWidget(5, QFormLayout::LabelRole, label);
+
+        viciniSecchi = new QSpinBox(formLayoutWidget_2);
+        viciniSecchi->setObjectName(QString::fromUtf8("viciniSecchi"));
+        viciniSecchi->setMaximum(8);
+        viciniSecchi->setValue(3);
+
+        formLayout_2->setWidget(5, QFormLayout::FieldRole, viciniSecchi);
+
         label_6 = new QLabel(Gioco);
         label_6->setObjectName(QString::fromUtf8("label_6"));
         label_6->setGeometry(QRect(120, 304, 141, 19));
@@ -216,11 +233,13 @@ public:
 "la pianta sana si infetti", nullptr));
         label_10->setText(QCoreApplication::translate("MainWindow", "Percentuale di piantare un nuovo germoglio", nullptr));
         label_11->setText(QCoreApplication::translate("MainWindow", "Percentuale che una pianta secchi", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "Numero minimo di vicini secchi affinch\303\251\n"
+"la pianta sana si secchi", nullptr));
         label_6->setText(QCoreApplication::translate("MainWindow", "IMPOSTAZIONI", nullptr));
         salvaImpostazioni->setText(QCoreApplication::translate("MainWindow", "Salva Impostazioni", nullptr));
         Start->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
         Stop->setText(QCoreApplication::translate("MainWindow", "Stop", nullptr));
-        Guarisci->setText(QCoreApplication::translate("MainWindow", "Guarisci Infetti", nullptr));
+        Guarisci->setText(QCoreApplication::translate("MainWindow", "Utilizza pesticida", nullptr));
         biologico->setText(QString());
     } // retranslateUi
 

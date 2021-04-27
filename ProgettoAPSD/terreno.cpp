@@ -17,77 +17,21 @@ along with Terreno.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "terreno.h"
 
-double Terreno::getPercentualeNuovaPianta() const
-{
-    return percentualeNuovaPianta;
+
+Terreno::Terreno() {
 }
 
-void Terreno::setPercentualeNuovaPianta(double value)
-{
-    percentualeNuovaPianta = value;
-}
+Terreno::Terreno(const Terreno& a) {
+    allocaMatricePianta();
 
-double Terreno::getPercentualeSeccaPiante() const
-{
-    return percentualeSeccaPiante;
-}
+    for_ij
+            terreno[i][j] = a.terreno[i][j];
 
-void Terreno::setPercentualeSeccaPiante(double value)
-{
-    percentualeSeccaPiante = value;
-}
+    for_ij
+            copiaTerreno[i][j] = a.copiaTerreno[i][j];
 
-double Terreno::getPercentualePianteIniziali() const
-{
-    return percentualePianteIniziali;
-}
-
-void Terreno::setPercentualePianteIniziali(double value)
-{
-    percentualePianteIniziali = value;
-}
-
-double Terreno::getPercenualeInizioInfezione() const
-{
-    return percenualeInizioInfezione;
-}
-
-void Terreno::setPercenualeInizioInfezione(double value)
-{
-    percenualeInizioInfezione = value;
-}
-
-int Terreno::getNumeroMinimoPropagazioneInfezione() const
-{
-    return numeroMinimoPropagazioneInfezione;
-}
-
-void Terreno::setNumeroMinimoPropagazioneInfezione(int value)
-{
-    numeroMinimoPropagazioneInfezione = value;
-}
-
-bool Terreno::getBiologico() const
-{
-    return biologico;
-}
-
-void Terreno::setBiologico(bool value)
-{
-    biologico = value;
-}
-
-Pianta **Terreno::getTerreno() const
-{
-    return terreno;
-}
-
-Terreno::Terreno()
-{
-    percentualeNuovaPianta = 0.75;
-    percentualeSeccaPiante = 0.2;
-    percenualeInizioInfezione = 0.1;
-    numeroMinimoPropagazioneInfezione = 2;
+    percentuali = a.percentuali;
+    biologico = a.biologico;
 }
 
 Terreno::~Terreno() {
@@ -98,39 +42,61 @@ void Terreno::svuota() {
     for_i
           free(terreno[i]);
     free(terreno);
+
+    for_i
+          free(copiaTerreno[i]);
+    free(copiaTerreno);
 }
 
-void Terreno::start() {
-    biologico = true;
+void Terreno::operator=(const Terreno & a) {
+    svuota();
+    allocaMatricePianta();
+
+    for_ij
+            terreno[i][j] = a.terreno[i][j];
+
+    for_ij
+            copiaTerreno[i][j] = a.copiaTerreno[i][j];
+
+    percentuali = a.percentuali;
+    biologico = a.biologico;
+}
+
+void Terreno::allocaMatricePianta() {
     terreno = (Pianta**) malloc(dim* sizeof(Pianta*));
 
     for_i
             terreno[i] = static_cast<Pianta*>(malloc(dim* sizeof(Pianta)));
+
+    copiaTerreno = (Pianta**) malloc(dim* sizeof(Pianta*));
+
+    for_i
+            copiaTerreno[i] = static_cast<Pianta*>(malloc(dim* sizeof(Pianta)));
+}
+
+void Terreno::copiaMatrice() {
+    for_ij
+            terreno[i][j] = copiaTerreno[i][j];
+}
+
+
+void Terreno::start() {
+    biologico = true;
+
+    allocaMatricePianta();
 
     for_ij
             terreno[i][j].setStato(vuoto);
 }
 
-void Terreno::restart() {
-    if(terreno != nullptr)
-        svuota();
-    biologico = true;
-    terreno = (Pianta**) malloc(dim* sizeof(Pianta*));
-
-    for_i
-            terreno[i] = static_cast<Pianta*>(malloc(dim* sizeof(Pianta)));
-    generaCasualmenteInizio();
-}
-
-int generaPiantaViva() {
-    return rand()%3 + 1;
-}
-
 void Terreno::generaCasualmenteInizio() {
-
+    unsigned int seed = time(NULL);
     for_ij {
-        if (rand() / double(RAND_MAX) < percentualePianteIniziali)
-            terreno[i][j].setStato(generaPiantaViva());
+        double random = (double)rand_r(&seed) / RAND_MAX;
+        if (random < percentuali.percentualePianteIniziali) {
+            int r1 = rand_r(&seed)%3 +1;
+            terreno[i][j].setStato(r1);
+        }
         else
             terreno[i][j].setStato(vuoto);
     }
@@ -139,51 +105,74 @@ void Terreno::generaCasualmenteInizio() {
         printf("numero random %f\n", rand() / double(RAND_MAX));*/
 }
 
-bool generare(double percentuale) {
-    return rand() / double(RAND_MAX) < percentuale;
-}
-
-int Terreno::numeroInfettiAdiacenti(int i, int j) const{
+int Terreno::numeroAdiacenti(int i, int j, int statoIniziale, int statoFinale) const{
     int somma = 0;
-
-    for(int x = i-1; x < i+1; ++x) {
-        for(int y = j-1; y < j+1; ++y) {
-            if(x >= 0 && x < dim && y >= 0 && y < dim && x != i && y != j)
-                if(terreno[x][y].getStato() >= germoglioInfetto || terreno[x][y].getStato() <= alberoInfetto)
+//    printf("i %d, j %d\n", i, j);
+    for(int x = i-1; x <= i+1; ++x) {
+ //       printf("x %d\n", x);
+        for(int y = j-1; y <= j+1; ++y) {
+ //           printf("y %d\n", y);
+            if(x >= 0 && x < dim && y >= 0 && y < dim) {
+//                printf("primo if\n");
+                if(terreno[x][y].getStato() >= statoIniziale && terreno[x][y].getStato() <= statoFinale) {
+//                    printf("secondo if\n");
                     somma++;
+                }
+            }
         }
     }
 
     return somma;
 }
 
-void Terreno::cicloPiantaViva(int i, int j, int stato) {
-    if(generare(percenualeInizioInfezione) || numeroInfettiAdiacenti(i, j) >= numeroMinimoPropagazioneInfezione)
-            terreno[i][j].setStato(stato + 6);
-    else if(generare(percentualeSeccaPiante))
-        terreno[i][j].setStato(stato + 3);
-    else
-        terreno[i][j].setStato(stato+1);
+void Terreno::cicloPiantaViva(int i, int j, int stato, double r1, double r2) {
+//    printf("%f %f\n", r1, r2);
+    if( r1 < percentuali.percentualeInizioInfezione || numeroAdiacenti(i, j, germoglioInfetto, alberoInfetto) >= percentuali.numeroMinimoPropagazioneInfezione) {
+        copiaTerreno[i][j].setStato(stato + 6);
+//        printf("Numero infetti adiacenti allo stato %d, posizione %d %d, = %d\n", terreno[i][j].getStato(), i, j, numeroAdiacenti(i,j,germoglioInfetto, alberoInfetto));
+//        printf("Numero minimo propagazione infezione = %d\n\n", percentuali.numeroMinimoPropagazioneInfezione);
+    }
+    else if( r2 < percentuali.percentualeSeccaPiante || numeroAdiacenti(i, j, germoglioSecco, alberoSecco) >= percentuali.numeroMinimoPropagazionePianteSecche) {
+        copiaTerreno[i][j].setStato(stato + 3);
+//        printf("Numero secchi adiacenti allo stato %d, posizione %d %d, = %d\n", terreno[i][j].getStato(), i, j, numeroAdiacenti(i,j,germoglioSecco, alberoSecco));
+//        printf("Numero minimo propagazione secchi = %d\n\n", percentuali.numeroMinimoPropagazionePianteSecche);
+    }
+    else if(stato == germoglio || stato == pianta)
+        copiaTerreno[i][j].setStato(stato + 1);
+    else {
+        copiaTerreno[i][j].setStato(stato);
+//        printf("sono nell'else del cicloPiantaViva, posizione %d, %d \n", i, j);
+    }
 }
 
 void Terreno::ciclo() {
+    unsigned int seed = time(NULL);
     for_ij {
+        double random = (double)rand_r(&seed) / RAND_MAX;
         switch(terreno[i][j].getStato()) {
-            case vuoto:
-                if(generare(percentualeNuovaPianta))
-                    terreno[i][j].setStato(germoglio);
+            case vuoto: {
+                if(random < percentuali.percentualeNuovaPianta)
+                    copiaTerreno[i][j].setStato(germoglio);
+                else
+                    copiaTerreno[i][j].setStato(vuoto);
                 break;
-            case germoglioInfetto ... alberoInfetto:
-                terreno[i][j].setStato(vuoto);
+            }
+            case germoglioInfetto ... alberoInfetto: {
+                copiaTerreno[i][j].setStato(vuoto);
                 break;
-            case germoglioSecco ... alberoSecco:
-                terreno[i][j].setStato(vuoto);
+            }
+            case germoglioSecco ... alberoSecco: {
+                copiaTerreno[i][j].setStato(vuoto);
                 break;
-            case germoglio ... albero:
-                cicloPiantaViva(i, j, terreno[i][j].getStato());
+            }
+            case germoglio ... albero: {
+                double random2 = (double)rand_r(&seed) / RAND_MAX;
+                cicloPiantaViva(i, j, terreno[i][j].getStato(), random, random2);
                 break;
+            }
         }
     }
+    copiaMatrice();
 }
 
 void Terreno::guarisciTutto() {
@@ -214,4 +203,19 @@ QString Terreno::numeroElementiPresenti() const {
         }
     }
     return "Numero zolle vuote: " + QString::number(vuota) + ". Numero zolle vive: " + QString::number(vivo) + ". Numero zolle secche: " + QString::number(secco) + ". Numero zolle infette: " + QString::number(infetti);
+}
+
+bool Terreno::getBiologico() const
+{
+    return biologico;
+}
+
+Pianta **Terreno::getTerreno() const
+{
+    return terreno;
+}
+
+void Terreno::setPercentuali(const Percentuali &value)
+{
+    percentuali = value;
 }

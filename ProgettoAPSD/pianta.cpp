@@ -17,6 +17,15 @@ along with Terreno.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "pianta.h"
 
+Pianta::Pianta()
+{
+    stato = vuoto;
+}
+
+void Pianta::operator=(const Pianta& a) {
+    stato = a.stato;
+}
+
 int Pianta::getStato() const
 {
     return stato;
@@ -25,9 +34,4 @@ int Pianta::getStato() const
 void Pianta::setStato(int value)
 {
     stato = value;
-}
-
-Pianta::Pianta()
-{
-    stato = vuoto;
 }
