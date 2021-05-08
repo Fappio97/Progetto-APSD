@@ -18,6 +18,7 @@ along with Terreno.  If not, see <http://www.gnu.org/licenses/>.
 #include "mainwindow.h"
 
 #include <QApplication>
+#include <mpi.h>
 
 #include "terreno.h"
 
@@ -67,12 +68,21 @@ along with Terreno.  If not, see <http://www.gnu.org/licenses/>.
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+/*    QApplication a(argc, argv);
     MainWindow w;
     w.show();
-    return a.exec();
+    return a.exec();*/
 
-/*    clock_t inizio = clock();
+    int myID, numProcessi, elementiPerProcesso;
+
+    MPI_Init(&argc, &argv);
+
+    MPI_Comm_size(MPI_COMM_WORLD, &numProcessi);
+    MPI_Comm_rank(MPI_COMM_WORLD, &myID);
+
+    MPI_Barrier(MPI_COMM_WORLD);
+    double inizio = MPI_Wtime();
+
 
     Terreno a;
     a.setPercentuali(Percentuali(0.75, 0.3, 0.1, 0.5, 1, 3));
@@ -82,5 +92,8 @@ int main(int argc, char *argv[])
     for(int i = 0; i < 100; ++i)
         a.ciclo();
 
-    printf("Tempo esecuzione = %f\n", (double) clock() - inizio / CLOCKS_PER_SEC );*/
+    MPI_Barrier(MPI_COMM_WORLD);
+    double fine = MPI_Wtime();
+
+    printf("Tempo esecuzione = %f\n", fine - inizio);
 }

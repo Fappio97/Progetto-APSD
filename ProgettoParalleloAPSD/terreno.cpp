@@ -63,15 +63,15 @@ void Terreno::operator=(const Terreno & a) {
 }
 
 void Terreno::allocaMatricePianta() {
-    terreno = (Pianta**) malloc(dim* sizeof(Pianta*));
+    terreno = (int**) malloc(dim* sizeof(int*));
 
     for_i
-            terreno[i] = static_cast<Pianta*>(malloc(dim* sizeof(Pianta)));
+            terreno[i] = static_cast<int*>(malloc(dim* sizeof(int)));
 
-    copiaTerreno = (Pianta**) malloc(dim* sizeof(Pianta*));
+    copiaTerreno = (int**) malloc(dim* sizeof(int*));
 
     for_i
-            copiaTerreno[i] = static_cast<Pianta*>(malloc(dim* sizeof(Pianta)));
+            copiaTerreno[i] = static_cast<int*>(malloc(dim* sizeof(int)));
 }
 
 void Terreno::copiaMatrice() {
@@ -86,7 +86,7 @@ void Terreno::start() {
     allocaMatricePianta();
 
     for_ij
-            terreno[i][j].setStato(vuoto);
+            terreno[i][j] = vuoto;
 }
 
 void Terreno::generaCasualmenteInizio() {
@@ -95,10 +95,10 @@ void Terreno::generaCasualmenteInizio() {
         double random = (double)rand_r(&seed) / RAND_MAX;
         if (random < percentuali.percentualePianteIniziali) {
             int r1 = rand_r(&seed)%3 +1;
-            terreno[i][j].setStato(r1);
+            terreno[i][j] = r1;
         }
         else
-            terreno[i][j].setStato(vuoto);
+            terreno[i][j] = vuoto;
     }
 
  /*   for_i
@@ -114,7 +114,7 @@ int Terreno::numeroAdiacenti(int i, int j, int statoIniziale, int statoFinale) c
  //           printf("y %d\n", y);
             if(x >= 0 && x < dim && y >= 0 && y < dim) {
 //                printf("primo if\n");
-                if(terreno[x][y].getStato() >= statoIniziale && terreno[x][y].getStato() <= statoFinale) {
+                if(terreno[x][y] >= statoIniziale && terreno[x][y] <= statoFinale) {
 //                    printf("secondo if\n");
                     somma++;
                 }
@@ -128,19 +128,19 @@ int Terreno::numeroAdiacenti(int i, int j, int statoIniziale, int statoFinale) c
 void Terreno::cicloPiantaViva(int i, int j, int stato, double r1, double r2) {
 //    printf("%f %f\n", r1, r2);
     if( r1 < percentuali.percentualeInizioInfezione + (stato * 0.05) || numeroAdiacenti(i, j, germoglioInfetto, alberoInfetto) >= percentuali.numeroMinimoPropagazioneInfezione) {
-        copiaTerreno[i][j].setStato(stato + 6);
+        copiaTerreno[i][j] = (stato + 6);
 //        printf("Numero infetti adiacenti allo stato %d, posizione %d %d, = %d\n", terreno[i][j].getStato(), i, j, numeroAdiacenti(i,j,germoglioInfetto, alberoInfetto));
 //        printf("Numero minimo propagazione infezione = %d\n\n", percentuali.numeroMinimoPropagazioneInfezione);
     }
     else if( r2 < percentuali.percentualeSeccaPiante + (stato * 0.05) || numeroAdiacenti(i, j, germoglioSecco, alberoSecco) >= percentuali.numeroMinimoPropagazionePianteSecche) {
-        copiaTerreno[i][j].setStato(stato + 3);
+        copiaTerreno[i][j] = (stato + 3);
 //        printf("Numero secchi adiacenti allo stato %d, posizione %d %d, = %d\n", terreno[i][j].getStato(), i, j, numeroAdiacenti(i,j,germoglioSecco, alberoSecco));
 //        printf("Numero minimo propagazione secchi = %d\n\n", percentuali.numeroMinimoPropagazionePianteSecche);
     }
     else if(stato == germoglio || stato == pianta)
-        copiaTerreno[i][j].setStato(stato + 1);
+        copiaTerreno[i][j] = (stato + 1);
     else {
-        copiaTerreno[i][j].setStato(stato);
+        copiaTerreno[i][j] = stato;
 //        printf("sono nell'else del cicloPiantaViva, posizione %d, %d \n", i, j);
     }
 }
@@ -149,25 +149,25 @@ void Terreno::ciclo() {
     unsigned int seed = time(NULL);
     for_ij {
         double random = (double)rand_r(&seed) / RAND_MAX;
-        switch(terreno[i][j].getStato()) {
+        switch(terreno[i][j]) {
             case vuoto: {
                 if(random < percentuali.percentualeNuovaPianta)
-                    copiaTerreno[i][j].setStato(germoglio);
+                    copiaTerreno[i][j] = germoglio;
                 else
-                    copiaTerreno[i][j].setStato(vuoto);
+                    copiaTerreno[i][j] = vuoto;
                 break;
             }
             case germoglioInfetto ... alberoInfetto: {
-                copiaTerreno[i][j].setStato(vuoto);
+                copiaTerreno[i][j] = vuoto;
                 break;
             }
             case germoglioSecco ... alberoSecco: {
-                copiaTerreno[i][j].setStato(vuoto);
+                copiaTerreno[i][j] = vuoto;
                 break;
             }
             case germoglio ... albero: {
                 double random2 = (double)rand_r(&seed) / RAND_MAX;
-                cicloPiantaViva(i, j, terreno[i][j].getStato(), random, random2);
+                cicloPiantaViva(i, j, terreno[i][j], random, random2);
                 break;
             }
         }
@@ -178,8 +178,8 @@ void Terreno::ciclo() {
 void Terreno::guarisciTutto() {
     bool almenoUnInfettoPresente = false;
     for_ij {
-        if(terreno[i][j].getStato() >= germoglioInfetto && terreno[i][j].getStato() <= alberoInfetto) {
-            terreno[i][j].setStato(terreno[i][j].getStato() - 6);
+        if(terreno[i][j] >= germoglioInfetto && terreno[i][j] <= alberoInfetto) {
+            terreno[i][j] = (terreno[i][j] - 6);
             almenoUnInfettoPresente = true;
         }
     }
@@ -191,7 +191,7 @@ QString Terreno::numeroElementiPresenti() const {
     int vuota = 0, vivo = 0, secco = 0, infetti = 0;
 
     for_ij {
-        switch(terreno[i][j].getStato()) {
+        switch(terreno[i][j]) {
             case vuoto:
                 vuota ++;
                 break;
@@ -214,7 +214,7 @@ bool Terreno::getBiologico() const
     return biologico;
 }
 
-Pianta **Terreno::getTerreno() const
+int** Terreno::getTerreno() const
 {
     return terreno;
 }

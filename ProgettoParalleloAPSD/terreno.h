@@ -34,8 +34,8 @@ const int dim = 4;
 
 class Terreno
 {
-    Pianta** terreno;
-    Pianta** copiaTerreno;
+    int** terreno;
+    int** copiaTerreno;
     Percentuali percentuali;
     bool biologico;
 
@@ -58,7 +58,7 @@ public:
     QString numeroElementiPresenti() const; //stampe per lo statusbar
 
     bool getBiologico() const;
-    Pianta **getTerreno() const;
+    int **getTerreno() const;
     void setPercentuali(const Percentuali &value);
 };
 
