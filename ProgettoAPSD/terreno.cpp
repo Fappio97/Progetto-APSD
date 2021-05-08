@@ -127,12 +127,12 @@ int Terreno::numeroAdiacenti(int i, int j, int statoIniziale, int statoFinale) c
 
 void Terreno::cicloPiantaViva(int i, int j, int stato, double r1, double r2) {
 //    printf("%f %f\n", r1, r2);
-    if( r1 < percentuali.percentualeInizioInfezione + (stato * 0.05) || numeroAdiacenti(i, j, germoglioInfetto, alberoInfetto) >= percentuali.numeroMinimoPropagazioneInfezione) {
+    if( r1 < percentuali.percentualeInizioInfezione + (stato * 0.01) || (numeroAdiacenti(i, j, germoglioInfetto, alberoInfetto) >= percentuali.numeroMinimoPropagazioneInfezione && percentuali.numeroMinimoPropagazioneInfezione != 0)) {
         copiaTerreno[i][j].setStato(stato + 6);
 //        printf("Numero infetti adiacenti allo stato %d, posizione %d %d, = %d\n", terreno[i][j].getStato(), i, j, numeroAdiacenti(i,j,germoglioInfetto, alberoInfetto));
 //        printf("Numero minimo propagazione infezione = %d\n\n", percentuali.numeroMinimoPropagazioneInfezione);
     }
-    else if( r2 < percentuali.percentualeSeccaPiante + (stato * 0.05) || numeroAdiacenti(i, j, germoglioSecco, alberoSecco) >= percentuali.numeroMinimoPropagazionePianteSecche) {
+    else if( r2 < percentuali.percentualeSeccaPiante + (stato * 0.01) || (numeroAdiacenti(i, j, germoglioSecco, alberoSecco) >= percentuali.numeroMinimoPropagazionePianteSecche && percentuali.numeroMinimoPropagazionePianteSecche != 0)) {
         copiaTerreno[i][j].setStato(stato + 3);
 //        printf("Numero secchi adiacenti allo stato %d, posizione %d %d, = %d\n", terreno[i][j].getStato(), i, j, numeroAdiacenti(i,j,germoglioSecco, alberoSecco));
 //        printf("Numero minimo propagazione secchi = %d\n\n", percentuali.numeroMinimoPropagazionePianteSecche);

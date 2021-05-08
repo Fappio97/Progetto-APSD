@@ -47,13 +47,13 @@ public:
     QLabel *label;
     QSpinBox *viciniSecchi;
     QLabel *label_6;
-    QPushButton *salvaImpostazioni;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout;
     QPushButton *Start;
     QPushButton *Stop;
     QPushButton *Guarisci;
     QLineEdit *biologico;
+    QPushButton *salvaImpostazioni;
     QWidget *Impostazioni;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -172,9 +172,6 @@ public:
         font1.setBold(true);
         font1.setWeight(75);
         label_6->setFont(font1);
-        salvaImpostazioni = new QPushButton(Gioco);
-        salvaImpostazioni->setObjectName(QString::fromUtf8("salvaImpostazioni"));
-        salvaImpostazioni->setGeometry(QRect(60, 576, 261, 27));
         verticalLayoutWidget = new QWidget(Gioco);
         verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
         verticalLayoutWidget->setGeometry(QRect(100, 112, 160, 129));
@@ -201,6 +198,9 @@ public:
         biologico->setGeometry(QRect(70, 40, 231, 27));
         biologico->setAlignment(Qt::AlignCenter);
         biologico->setReadOnly(true);
+        salvaImpostazioni = new QPushButton(Gioco);
+        salvaImpostazioni->setObjectName(QString::fromUtf8("salvaImpostazioni"));
+        salvaImpostazioni->setGeometry(QRect(80, 584, 241, 27));
         stackedWidget->addWidget(Gioco);
         Impostazioni = new QWidget();
         Impostazioni->setObjectName(QString::fromUtf8("Impostazioni"));
@@ -236,11 +236,11 @@ public:
         label->setText(QCoreApplication::translate("MainWindow", "Numero minimo di vicini secchi affinch\303\251\n"
 "la pianta sana si secchi", nullptr));
         label_6->setText(QCoreApplication::translate("MainWindow", "IMPOSTAZIONI", nullptr));
-        salvaImpostazioni->setText(QCoreApplication::translate("MainWindow", "Salva Impostazioni", nullptr));
         Start->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
         Stop->setText(QCoreApplication::translate("MainWindow", "Stop", nullptr));
         Guarisci->setText(QCoreApplication::translate("MainWindow", "Utilizza pesticida", nullptr));
         biologico->setText(QString());
+        salvaImpostazioni->setText(QCoreApplication::translate("MainWindow", "Salva Impostazioni", nullptr));
     } // retranslateUi
 
 };
