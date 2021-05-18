@@ -70,12 +70,12 @@ void MainWindow::aggiornaInterfaccia() {
 void MainWindow::paintEvent(QPaintEvent* event) {
     QPainter paint(this);
 
-    Pianta** terreno = suolo->getTerreno();
+    int** terreno = suolo->getTerreno();
     QVector<QPixmap> immagini = img->getImmagini();
 
 //    QColor colore(250, 250, 250);
     for_ij {
-        switch(terreno[i][j].getStato()) {
+        switch(terreno[i][j]) {
             case vuoto:
                 paint.drawPixmap(i * dimensioneCelle, j * dimensioneCelle, immagini[vuoto]);
                 break;
