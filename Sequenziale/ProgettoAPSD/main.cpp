@@ -67,21 +67,24 @@ along with Terreno.  If not, see <http://www.gnu.org/licenses/>.
 
 int main(int argc, char *argv[])
 {
+
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
     return a.exec();
 
-/*    clock_t inizio = clock();
+/*
+    clock_t inizio = clock();
 
     Terreno a;
     a.setPercentuali(Percentuali(0.75, 0.3, 0.1, 0.5, 1, 3));
     a.start();
     a.generaCasualmenteInizio();
 
-    for(int i = 0; i < 100000; ++i)
+    for(int i = 0; i < 1000; ++i)
         a.ciclo();
 
     printf("Tempo esecuzione = %f", (double) (clock() - inizio) / CLOCKS_PER_SEC );
-    printf(" secondi\n");*/
+    printf(" secondi\n");
+*/
 }

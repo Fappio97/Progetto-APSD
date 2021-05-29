@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.0
+** Created by: Qt User Interface Compiler version 6.1.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -170,7 +170,6 @@ public:
         QFont font1;
         font1.setPointSize(14);
         font1.setBold(true);
-        font1.setWeight(75);
         label_6->setFont(font1);
         salvaImpostazioni = new QPushButton(Gioco);
         salvaImpostazioni->setObjectName(QString::fromUtf8("salvaImpostazioni"));

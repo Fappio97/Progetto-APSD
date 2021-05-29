@@ -24,15 +24,6 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-
-/*    QScreen *screen = QGuiApplication::primaryScreen();   //ridimensiona la pagina ma ho sempre il problema del layout dei bottoni
-    QSize size = screen->availableGeometry().size() * 0.9;
-
-    this->setWindowTitle("Terreno");    //sembra non funzionare
-    this->setMinimumWidth(size.width());
-    this->setMinimumHeight(size.height());*/
-
-
     ui->setupUi(this);
     suolo = new Terreno();
     inizializzaSuolo();
