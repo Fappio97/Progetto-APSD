@@ -204,7 +204,7 @@ int main(int argc, char* argv[]) {
 	// sono scandite linearmente
 	MPI_Datatype datatype;
 	MPI_Type_contiguous(SIZE, MPI_INT, &datatype);
-    	MPI_Type_commit(&datatype);
+    MPI_Type_commit(&datatype);
 	
 	if(myID == 0) {
 		fprintf(output, "Terreno iniziale\n");
@@ -224,13 +224,6 @@ int main(int argc, char* argv[]) {
 	// inizializzo le parti che non ricevo a -1
 	for(int i = 0; i < dimVettoreLocale; ++i)
 		vettoreLocale[i] = -1;
-	
-	// invio ad ogni processo, sul loro vettoreLocale, le colonne su cui devono lavorare
-	// da notare che gliele invio sul vettoreLocale non dalla posizione 0 ma dalla poszione
-	// SIZE poiché gli elementi che vanno da 0 a SIZE rappresenteranno la cella ghost di sinistra
-	// per quel processore e siccome il vettoreLocale ha dimensione dimVettoreLocale + (2 * SIZE)
-	// non si riempirà mai no lo scatter le ultime SIZE posizioni che rappresentano la cella ghost
-	// di destra
 	
 	// creazione di elementi per la topologia cartesiana
 	// la topologia cartesiana sarà di una dimensione, non avrà periodicità
@@ -268,8 +261,12 @@ int main(int argc, char* argv[]) {
 			stampaVettoreComeMatrice(vettore, dimVettore, output);
 		}
 		
-		// invio gli elementi partizionandoli con lo scatter al vettoreLocale su ogni
-		// processo
+		// invio ad ogni processo, sul loro vettoreLocale, le colonne su cui devono lavorare
+		// da notare che gliele invio sul vettoreLocale non dalla posizione 0 ma dalla poszione
+		// SIZE poiché gli elementi che vanno da 0 a SIZE rappresenteranno la cella ghost di sinistra
+		// per quel processore e siccome il vettoreLocale ha dimensione dimVettoreLocale + (2 * SIZE)
+		// non si riempirà mai no lo scatter le ultime SIZE posizioni che rappresentano la cella ghost
+		// di destra
 		MPI_Scatter(vettore, elementiPerProcesso, MPI_INT, &vettoreLocale[SIZE], elementiPerProcesso, MPI_INT, 0, MPI_COMM_WORLD);
 	
 		// per ogni processore mi domande se esso ha un vicino sinistro e destro
